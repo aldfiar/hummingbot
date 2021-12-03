@@ -14,6 +14,7 @@ export namespace ConfigManager {
     CERT_PATH: string;
     ETHEREUM_CHAIN: string;
     AVALANCHE_CHAIN: string;
+    POLYGON_CHAIN: string;
     INFURA_KEY: string;
     ETH_GAS_STATION_ENABLE: boolean;
     ETH_GAS_STATION_API_KEY: string;
@@ -24,6 +25,10 @@ export namespace ConfigManager {
     UNISWAP_ALLOWED_SLIPPAGE: string;
     UNISWAP_GAS_LIMIT: number;
     UNISWAP_TTL: number;
+    QUICKSWAP_ALLOWED_SLIPPAGE: string;
+    QUICKSWAP_GAS_LIMIT: number;
+    QUICKSWAP_TTL: number;
+    MATIC_KEY: string;
     PANGOLIN_ALLOWED_SLIPPAGE: string;
     PANGOLIN_GAS_LIMIT: number;
     PANGOLIN_TTL: number;
@@ -56,6 +61,11 @@ export namespace ConfigManager {
       percentRegexp.test(o['UNISWAP_ALLOWED_SLIPPAGE']) &&
       'UNISWAP_GAS_LIMIT' in o &&
       'UNISWAP_TTL' in o &&
+      'QUICKSWAP_ALLOWED_SLIPPAGE' in o &&
+      percentRegexp.test(o['QUICKSWAP_ALLOWED_SLIPPAGE']) &&
+      'QUICKSWAP_GAS_LIMIT' in o &&
+      'QUICKSWAP_TTL' in o &&
+      'MATIC_KEY' in o &&
       'PANGOLIN_ALLOWED_SLIPPAGE' in o &&
       percentRegexp.test(o['PANGOLIN_ALLOWED_SLIPPAGE']) &&
       'PANGOLIN_GAS_LIMIT' in o &&
