@@ -136,7 +136,7 @@ export class Polygon extends EthereumBase implements Ethereumish {
   getSpender(reqSpender: string): string {
     let spender: string;
     if (reqSpender === 'polygon') {
-      if (ConfigManager.config.ETHEREUM_CHAIN === 'mainnet') {
+      if (ConfigManager.config.POLYGON_CHAIN === 'matic') {
         spender = QuickswapConfig.config.matic.quickswapV2RouterAddress;
       } else {
         spender = QuickswapConfig.config.mumbai.quickswapV2RouterAddress;

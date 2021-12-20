@@ -21,7 +21,8 @@ import {
 } from '../../../services/uniswapish.interface';
 import {Polygon} from "../polygon";
 import {QuickswapConfig} from "./quickswap.config";
-import {EthereumConfig} from "../../ethereum/ethereum.config";
+import {PolygonConfig} from "../polygon.config";
+
 export class Quickswap implements Uniswapish {
   private static instance: Quickswap;
   private polygon: Polygon = Polygon.getInstance();
@@ -37,10 +38,10 @@ export class Quickswap implements Uniswapish {
     let config;
     if (ConfigManager.config.POLYGON_CHAIN === 'matic') {
       config = QuickswapConfig.config.matic;
-      this.chainId = EthereumConfig.config.mainnet.chainId;
+      this.chainId = PolygonConfig.config.matic.chainId;
     } else {
       config = QuickswapConfig.config.mumbai;
-      this.chainId = EthereumConfig.config.kovan.chainId;
+      this.chainId = PolygonConfig.config.mumbai.chainId;
     }
     this._ttl = ConfigManager.config.QUICKSWAP_TTL;
     this._routerAbi = routerAbi.abi;
