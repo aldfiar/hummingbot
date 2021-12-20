@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { NextFunction, Router, Request, Response } from 'express';
-import { Ethereum } from './ethereum';
-import { EthereumConfig } from './ethereum.config';
+import { Polygon } from './polygon';
+import { PolygonConfig } from './polygon.config';
 import { ConfigManager } from '../../services/config-manager';
 import { verifyEthereumIsAvailable } from './polygon-middlewares';
 import { asyncHandler } from '../../services/error-handler';
@@ -12,7 +12,7 @@ import {
   nonce,
   poll,
   cancel,
-} from './ethereum.controllers';
+} from '../ethereum/ethereum.controllers';
 import {
   EthereumNonceRequest,
   EthereumNonceResponse,
@@ -26,7 +26,7 @@ import {
   EthereumPollResponse,
   EthereumCancelRequest,
   EthereumCancelResponse,
-} from './ethereum.requests';
+} from '../ethereum/ethereum.requests';
 import {
   validateEthereumAllowancesRequest,
   validateEthereumApproveRequest,
@@ -38,7 +38,7 @@ import {
 
 export namespace PolygonRoutes {
   export const router = Router();
-  export const ethereum = Ethereum.getInstance();
+  export const polygon = Polygon.getInstance();
   export const reload = (): void => {
     // ethereum = Ethereum.reload();
   };
@@ -50,9 +50,9 @@ export namespace PolygonRoutes {
     asyncHandler(async (_req: Request, res: Response) => {
       let rpcUrl;
       if (ConfigManager.config.ETHEREUM_CHAIN === 'mainnet') {
-        rpcUrl = EthereumConfig.config.mainnet.rpcUrl;
+        rpcUrl = PolygonConfig.config.matic.rpcUrl;
       } else {
-        rpcUrl = EthereumConfig.config.kovan.rpcUrl;
+        rpcUrl = PolygonConfig.config.mumbai.rpcUrl;
       }
 
       res.status(200).json({
@@ -72,7 +72,7 @@ export namespace PolygonRoutes {
         res: Response<EthereumNonceResponse | string, {}>
       ) => {
         validateEthereumNonceRequest(req.body);
-        res.status(200).json(await nonce(ethereum, req.body));
+        res.status(200).json(await nonce(polygon, req.body));
       }
     )
   );
@@ -85,7 +85,7 @@ export namespace PolygonRoutes {
         res: Response<EthereumAllowancesResponse | string, {}>
       ) => {
         validateEthereumAllowancesRequest(req.body);
-        res.status(200).json(await allowances(ethereum, req.body));
+        res.status(200).json(await allowances(polygon, req.body));
       }
     )
   );
@@ -99,7 +99,7 @@ export namespace PolygonRoutes {
         _next: NextFunction
       ) => {
         validateEthereumBalanceRequest(req.body);
-        res.status(200).json(await balances(ethereum, req.body));
+        res.status(200).json(await balances(polygon, req.body));
       }
     )
   );
@@ -112,7 +112,7 @@ export namespace PolygonRoutes {
         res: Response<EthereumApproveResponse | string, {}>
       ) => {
         validateEthereumApproveRequest(req.body);
-        return res.status(200).json(await approve(ethereum, req.body));
+        return res.status(200).json(await approve(polygon, req.body));
       }
     )
   );
@@ -125,7 +125,7 @@ export namespace PolygonRoutes {
         res: Response<EthereumPollResponse, {}>
       ) => {
         validateEthereumPollRequest(req.body);
-        res.status(200).json(await poll(ethereum, req.body));
+        res.status(200).json(await poll(polygon, req.body));
       }
     )
   );
@@ -138,7 +138,7 @@ export namespace PolygonRoutes {
         res: Response<EthereumCancelResponse, {}>
       ) => {
         validateEthereumCancelRequest(req.body);
-        res.status(200).json(await cancel(ethereum, req.body));
+        res.status(200).json(await cancel(polygon, req.body));
       }
     )
   );

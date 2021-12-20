@@ -4,7 +4,7 @@ import {
   SERVICE_UNITIALIZED_ERROR_CODE,
   SERVICE_UNITIALIZED_ERROR_MESSAGE,
 } from '../../../services/error-handler';
-import routerAbi from './uniswap_v2_router_abi.json';
+import routerAbi from './quickswap_v2_router_abi.json';
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 import {
   Fetcher,
@@ -20,8 +20,9 @@ import {
   ExpectedTrade,
   Uniswapish,
 } from '../../../services/uniswapish.interface';
-import {Polygon} from "../polygon";
-import {QuickswapConfig} from "./quickswap.config";
+import { Polygon } from '../polygon';
+import { QuickswapConfig } from './quickswap.config';
+import { PolygonConfig } from '../polygon.config';
 export class Quickswap implements Uniswapish {
   private static instance: Quickswap;
   private ethereum: Polygon = Polygon.getInstance();
@@ -37,23 +38,23 @@ export class Quickswap implements Uniswapish {
     let config;
     if (ConfigManager.config.POLYGON_CHAIN === 'matic') {
       config = QuickswapConfig.config.matic;
-      this.chainId = EthereumConfig.config.mainnet.chainId;
+      this.chainId = PolygonConfig.config.matic.chainId;
     } else {
       config = QuickswapConfig.config.mumbai;
-      this.chainId = EthereumConfig.config.kovan.chainId;
+      this.chainId = PolygonConfig.config.mumbai.chainId;
     }
     this._ttl = ConfigManager.config.UNISWAP_TTL;
     this._routerAbi = routerAbi.abi;
     this._gasLimit = ConfigManager.config.UNISWAP_GAS_LIMIT;
-    this._router = config.uniswapV2RouterAddress;
+    this._router = config.quickswapV2RouterAddress;
   }
 
-  public static getInstance(): Uniswap {
-    if (!Uniswap.instance) {
-      Uniswap.instance = new Uniswap();
+  public static getInstance(): Quickswap {
+    if (!Quickswap.instance) {
+      Quickswap.instance = new Quickswap();
     }
 
-    return Uniswap.instance;
+    return Quickswap.instance;
   }
 
   public getTokenByAddress(address: string): Token {
@@ -61,12 +62,12 @@ export class Quickswap implements Uniswapish {
   }
 
   public async init() {
-    if (!Ethereum.getInstance().ready())
+    if (!Polygon.getInstance().ready())
       throw new InitializationError(
         SERVICE_UNITIALIZED_ERROR_MESSAGE('ETH'),
         SERVICE_UNITIALIZED_ERROR_CODE
       );
-    for (const token of Ethereum.getInstance().storedTokenList) {
+    for (const token of Polygon.getInstance().storedTokenList) {
       this.tokenList[token.address] = new Token(
         this.chainId,
         token.address,

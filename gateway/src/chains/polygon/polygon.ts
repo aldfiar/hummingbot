@@ -6,7 +6,8 @@ import { EthereumBase } from '../../services/ethereum-base';
 import { ConfigManager } from '../../services/config-manager';
 import { Provider } from '@ethersproject/abstract-provider';
 import { Ethereumish } from '../../services/ethereumish.interface';
-import {PolygonConfig} from "./polygon.config";
+import { PolygonConfig } from './polygon.config';
+import { QuickswapConfig } from './quickswap/quickswap.config';
 
 export class Polygon extends EthereumBase implements Ethereumish {
   private static _instance: Polygon;
@@ -41,8 +42,7 @@ export class Polygon extends EthereumBase implements Ethereumish {
     );
     this._chain = ConfigManager.config.POLYGON_CHAIN;
     this._nativeTokenSymbol = 'MATIC';
-    this._ethGasStationUrl =
-      'https://gasstation-mainnet.matic.network/';
+    this._ethGasStationUrl = 'https://gasstation-mainnet.matic.network/';
     this._gasPrice = ConfigManager.config.ETH_MANUAL_GAS_PRICE;
     this._gasPriceLastUpdated = null;
 
@@ -136,9 +136,9 @@ export class Polygon extends EthereumBase implements Ethereumish {
     let spender: string;
     if (reqSpender === 'polygon') {
       if (ConfigManager.config.ETHEREUM_CHAIN === 'mainnet') {
-        spender = PolygonConfig.config.matic.uniswapV2RouterAddress;
+        spender = QuickswapConfig.config.matic.quickswapV2RouterAddress;
       } else {
-        spender = PolygonConfig.config.mumbai.uniswapV2RouterAddress;
+        spender = QuickswapConfig.config.mumbai.quickswapV2RouterAddress;
       }
     } else {
       spender = reqSpender;

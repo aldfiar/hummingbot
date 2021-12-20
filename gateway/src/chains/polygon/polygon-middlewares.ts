@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import {Polygon} from "./polygon";
+import { Polygon } from './polygon';
 
 export const verifyEthereumIsAvailable = async (
   _req: Request,

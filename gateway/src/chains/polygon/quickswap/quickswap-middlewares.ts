@@ -1,4 +1,4 @@
-import { Uniswap } from './uniswap';
+import { Quickswap } from './quickswap';
 import { NextFunction, Request, Response } from 'express';
 
 export const verifyQuickswapIsAvailable = async (
@@ -6,9 +6,9 @@ export const verifyQuickswapIsAvailable = async (
   _res: Response,
   next: NextFunction
 ) => {
-  const uniswap = Uniswap.getInstance();
-  if (!uniswap.ready()) {
-    await uniswap.init();
+  const quickswap = Quickswap.getInstance();
+  if (!quickswap.ready()) {
+    await quickswap.init();
   }
   return next();
 };

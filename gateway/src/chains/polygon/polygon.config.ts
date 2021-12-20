@@ -1,4 +1,4 @@
-import {NetworkConfig} from "../ethereum/ethereum.config";
+import { NetworkConfig } from '../ethereum/ethereum.config';
 
 export interface PolygonNetworksConfig {
   matic: NetworkConfig;
@@ -10,7 +10,8 @@ export namespace PolygonConfig {
       chainId: 137,
       rpcUrl: 'https://rpc-mainnet.maticvigil.com/v1/',
       tokenListType: 'FILE',
-      tokenListSource: 'https://wispy-bird-88a7.uniswap.workers.dev/?url=http://tokens.1inch.eth.link',
+      tokenListSource:
+        'https://wispy-bird-88a7.uniswap.workers.dev/?url=http://tokens.1inch.eth.link',
     },
     mumbai: {
       chainId: 80001,
