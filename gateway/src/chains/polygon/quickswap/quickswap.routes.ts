@@ -20,8 +20,8 @@ import {Quickswap} from "./quickswap";
 
 export namespace QuickSwapRoutes {
   export const router = Router();
-  export const ethereum = Polygon.getInstance();
-  export const uniswap = Quickswap.getInstance();
+  export const polygon = Polygon.getInstance();
+  export const quickswap = Quickswap.getInstance();
 
   router.use(
     asyncHandler(verifyEthereumIsAvailable),
@@ -30,8 +30,8 @@ export namespace QuickSwapRoutes {
 
   router.get('/', async (_req: Request, res: Response) => {
     res.status(200).json({
-      network: ConfigManager.config.ETHEREUM_CHAIN,
-      uniswap_router: uniswap.router,
+      network: ConfigManager.config.POLYGON_CHAIN,
+      uniswap_router: quickswap.router,
       connection: true,
       timestamp: Date.now(),
     });
@@ -45,7 +45,7 @@ export namespace QuickSwapRoutes {
         res: Response<UniswapPriceResponse, any>
       ) => {
         validateUniswapPriceRequest(req.body);
-        res.status(200).json(await price(ethereum, uniswap, req.body));
+        res.status(200).json(await price(polygon, quickswap, req.body));
       }
     )
   );
@@ -58,7 +58,7 @@ export namespace QuickSwapRoutes {
         res: Response<UniswapTradeResponse | UniswapTradeErrorResponse, any>
       ) => {
         validateUniswapTradeRequest(req.body);
-        res.status(200).json(await trade(ethereum, uniswap, req.body));
+        res.status(200).json(await trade(polygon, quickswap, req.body));
       }
     )
   );

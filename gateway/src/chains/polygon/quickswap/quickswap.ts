@@ -24,7 +24,7 @@ import {QuickswapConfig} from "./quickswap.config";
 import {EthereumConfig} from "../../ethereum/ethereum.config";
 export class Quickswap implements Uniswapish {
   private static instance: Quickswap;
-  private ethereum: Polygon = Polygon.getInstance();
+  private polygon: Polygon = Polygon.getInstance();
   private _router: string;
   private _routerAbi: ContractInterface;
   private _gasLimit: number;
@@ -42,9 +42,9 @@ export class Quickswap implements Uniswapish {
       config = QuickswapConfig.config.mumbai;
       this.chainId = EthereumConfig.config.kovan.chainId;
     }
-    this._ttl = ConfigManager.config.UNISWAP_TTL;
+    this._ttl = ConfigManager.config.QUICKSWAP_TTL;
     this._routerAbi = routerAbi.abi;
-    this._gasLimit = ConfigManager.config.UNISWAP_GAS_LIMIT;
+    this._gasLimit = ConfigManager.config.QUICKSWAP_GAS_LIMIT;
     this._router = config.quickswapV2RouterAddress;
   }
 
@@ -63,7 +63,7 @@ export class Quickswap implements Uniswapish {
   public async init() {
     if (!Polygon.getInstance().ready())
       throw new InitializationError(
-        SERVICE_UNITIALIZED_ERROR_MESSAGE('ETH'),
+        SERVICE_UNITIALIZED_ERROR_MESSAGE('POLYGON'),
         SERVICE_UNITIALIZED_ERROR_CODE
       );
     for (const token of Polygon.getInstance().storedTokenList) {
@@ -99,7 +99,7 @@ export class Quickswap implements Uniswapish {
   }
 
   getSlippagePercentage(): Percent {
-    const allowedSlippage = ConfigManager.config.UNISWAP_ALLOWED_SLIPPAGE;
+    const allowedSlippage = ConfigManager.config.QUICKSWAP_ALLOWED_SLIPPAGE;
     const nd = allowedSlippage.match(ConfigManager.percentRegexp);
     if (nd) return new Percent(nd[1], nd[2]);
     throw new Error(
@@ -121,7 +121,7 @@ export class Quickswap implements Uniswapish {
     const pair = await Fetcher.fetchPairData(
       tokenIn,
       tokenOut,
-      this.ethereum.provider
+      this.polygon.provider
     );
     const trades = Trade.bestTradeExactIn([pair], tokenInAmount_, tokenOut, {
       maxHops: 1,
@@ -152,7 +152,7 @@ export class Quickswap implements Uniswapish {
     const pair = await Fetcher.fetchPairData(
       tokenIn,
       tokenOut,
-      this.ethereum.provider
+      this.polygon.provider
     );
     const trades = Trade.bestTradeExactOut([pair], tokenIn, tokenOutAmount_, {
       maxHops: 1,
@@ -190,7 +190,7 @@ export class Quickswap implements Uniswapish {
 
     const contract = new Contract(uniswapRouter, abi, wallet);
     if (!nonce) {
-      nonce = await this.ethereum.nonceManager.getNonce(wallet.address);
+      nonce = await this.polygon.nonceManager.getNonce(wallet.address);
     }
     let tx;
     if (maxFeePerGas || maxPriorityFeePerGas) {
@@ -211,7 +211,7 @@ export class Quickswap implements Uniswapish {
     }
 
     logger.info(tx);
-    await this.ethereum.nonceManager.commitNonce(wallet.address, nonce);
+    await this.polygon.nonceManager.commitNonce(wallet.address, nonce);
     return tx;
   }
 }
