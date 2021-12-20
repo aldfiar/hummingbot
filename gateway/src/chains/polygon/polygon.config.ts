@@ -10,7 +10,7 @@ export namespace PolygonConfig {
       chainId: 137,
       rpcUrl: 'https://rpc-mainnet.maticvigil.com/v1/',
       tokenListType: 'FILE',
-      tokenListSource: 'https://wispy-bird-88a7.uniswap.workers.dev/?url=http://tokens.1inch.eth.link',
+      tokenListSource: 'src/chains/polygon/polygon_tokens.json',
     },
     mumbai: {
       chainId: 80001,
