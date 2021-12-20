@@ -5,6 +5,9 @@ import { EthereumRoutes } from './chains/ethereum/ethereum.routes';
 import { UniswapRoutes } from './chains/ethereum/uniswap/uniswap.routes';
 import { AvalancheRoutes } from './chains/avalanche/avalanche.routes';
 import { PangolinRoutes } from './chains/avalanche/pangolin/pangolin.routes';
+import {PolygonRoutes} from "./chains/polygon/polygon.routes";
+import {QuickSwapRoutes} from "./chains/polygon/quickswap/quickswap.routes"
+
 import { ConfigManager } from './services/config-manager';
 import { logger, updateLoggerToStdout } from './services/logger';
 import { addHttps } from './https';
@@ -30,6 +33,9 @@ app.use(express.urlencoded({ extended: true }));
 // mount sub routers
 app.use('/eth', EthereumRoutes.router);
 app.use('/eth/uniswap', UniswapRoutes.router);
+
+app.use('/polygon', PolygonRoutes.router);
+app.use('/polygon/quickswap', QuickSwapRoutes.router);
 
 // mount sub routers
 app.use('/avalanche', AvalancheRoutes.router);
