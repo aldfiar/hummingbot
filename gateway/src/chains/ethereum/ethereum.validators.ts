@@ -55,7 +55,7 @@ export const validatePrivateKey: Validator = mkValidator(
 export const validateSpender: Validator = mkValidator(
   'spender',
   invalidSpenderError,
-  (val) => typeof val === 'string' && (val === 'uniswap' || isPublicKey(val))
+  (val) => typeof val === 'string' && ((val === 'uniswap' || val === 'quickswap' )|| isPublicKey(val))
 );
 
 // confirm that tokenSymbols is an array of strings
