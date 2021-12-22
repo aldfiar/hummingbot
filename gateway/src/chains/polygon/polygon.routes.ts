@@ -33,8 +33,8 @@ import {
   validateEthereumNonceRequest,
   validateEthereumPollRequest,
 } from '../ethereum/ethereum.validators';
-import {Polygon} from "./polygon";
-import {PolygonConfig} from "./polygon.config";
+import { Polygon } from './polygon';
+import { PolygonConfig } from './polygon.config';
 
 export namespace PolygonRoutes {
   export const router = Router();
@@ -49,7 +49,7 @@ export namespace PolygonRoutes {
     '/',
     asyncHandler(async (_req: Request, res: Response) => {
       let rpcUrl;
-      if (ConfigManager.config.POLYGON_CHAIN=== 'matic') {
+      if (ConfigManager.config.POLYGON_CHAIN === 'matic') {
         rpcUrl = PolygonConfig.config.matic.rpcUrl;
       } else {
         rpcUrl = PolygonConfig.config.mumbai.rpcUrl;

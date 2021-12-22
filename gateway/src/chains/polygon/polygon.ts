@@ -6,8 +6,8 @@ import { EthereumBase } from '../../services/ethereum-base';
 import { ConfigManager } from '../../services/config-manager';
 import { Provider } from '@ethersproject/abstract-provider';
 import { Ethereumish } from '../../services/ethereumish.interface';
-import {PolygonConfig} from "./polygon.config";
-import {QuickswapConfig} from "./quickswap/quickswap.config";
+import { PolygonConfig } from './polygon.config';
+import { QuickswapConfig } from './quickswap/quickswap.config';
 
 export class Polygon extends EthereumBase implements Ethereumish {
   private static _instance: Polygon;
@@ -42,8 +42,7 @@ export class Polygon extends EthereumBase implements Ethereumish {
     );
     this._chain = ConfigManager.config.POLYGON_CHAIN;
     this._nativeTokenSymbol = 'MATIC';
-    this._ethGasStationUrl =
-      'https://gasstation-mainnet.matic.network/';
+    this._ethGasStationUrl = 'https://gasstation-mainnet.matic.network/';
     this._gasPrice = ConfigManager.config.ETH_MANUAL_GAS_PRICE;
     this._gasPriceLastUpdated = null;
 

@@ -16,7 +16,7 @@ import {
   validateUniswapPriceRequest,
   validateUniswapTradeRequest,
 } from '../../ethereum/uniswap/uniswap.validators';
-import {Quickswap} from "./quickswap";
+import { Quickswap } from './quickswap';
 
 export namespace QuickSwapRoutes {
   export const router = Router();

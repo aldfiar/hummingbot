@@ -1,4 +1,4 @@
-import {NetworkConfig} from "../ethereum/ethereum.config";
+import { NetworkConfig } from '../ethereum/ethereum.config';
 
 export interface PolygonNetworksConfig {
   matic: NetworkConfig;
