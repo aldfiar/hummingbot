@@ -16,7 +16,7 @@ from hummingbot import root_path
 from hummingbot.core.gateway import get_gateway_paths
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 CERT_SUBJECT = [
     x509.NameAttribute(NameOID.ORGANIZATION_NAME, 'localhost'),

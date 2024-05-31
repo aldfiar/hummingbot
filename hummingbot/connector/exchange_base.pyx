@@ -16,7 +16,7 @@ from hummingbot.core.data_type.trade_fee import AddedToCostTradeFee
 from hummingbot.core.utils.async_utils import safe_gather
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 s_float_NaN = float("nan")
 s_decimal_NaN = Decimal("nan")

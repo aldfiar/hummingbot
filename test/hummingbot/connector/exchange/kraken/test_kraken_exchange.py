@@ -8,8 +8,8 @@ from typing import Awaitable, Dict
 
 from aioresponses import aioresponses
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.kraken import kraken_constants as CONSTANTS
 from hummingbot.connector.exchange.kraken.kraken_exchange import KrakenExchange
 from hummingbot.connector.exchange.kraken.kraken_in_flight_order import KrakenInFlightOrderNotCreated

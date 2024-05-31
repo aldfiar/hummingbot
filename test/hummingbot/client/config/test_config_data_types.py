@@ -7,9 +7,10 @@ from typing import Union
 from pydantic import Field, SecretStr
 from pydantic.fields import FieldInfo
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_crypt import ETHKeyFileSecretManger
 from hummingbot.client.config.config_data_types import BaseClientModel, ClientConfigEnum, ClientFieldData
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, ConfigTraversalItem
+from hummingbot.client.config.config_traversal import ConfigTraversalItem
 from hummingbot.client.config.security import Security
 
 

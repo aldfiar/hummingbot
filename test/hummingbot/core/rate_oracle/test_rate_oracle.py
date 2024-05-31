@@ -4,8 +4,8 @@ from copy import deepcopy
 from decimal import Decimal
 from typing import Awaitable, Dict, Optional
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.utils import combine_to_hb_trading_pair
 from hummingbot.core.rate_oracle.rate_oracle import RateOracle
 from hummingbot.core.rate_oracle.sources.coin_gecko_rate_source import CoinGeckoRateSource

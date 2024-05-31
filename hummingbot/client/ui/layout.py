@@ -18,7 +18,7 @@ from prompt_toolkit.layout.layout import Layout
 from prompt_toolkit.layout.menus import CompletionsMenu
 from prompt_toolkit.widgets import Box, Button, SearchToolbar
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.settings import MAXIMUM_LOG_PANE_LINE_COUNT, MAXIMUM_OUTPUT_PANE_LINE_COUNT
 from hummingbot.client.tab.data_types import CommandTab
 from hummingbot.client.ui.custom_widgets import CustomTextArea as TextArea, FormattedTextLexer

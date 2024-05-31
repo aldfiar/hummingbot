@@ -10,8 +10,8 @@ from unittest.mock import AsyncMock, patch
 
 from aioresponses import aioresponses
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.altmarkets.altmarkets_constants import Constants
 from hummingbot.connector.exchange.altmarkets.altmarkets_exchange import AltmarketsExchange
 from hummingbot.connector.exchange.altmarkets.altmarkets_in_flight_order import AltmarketsInFlightOrder

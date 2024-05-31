@@ -7,8 +7,8 @@ from test.hummingbot.connector.gateway.clob_perp.data_sources.injective_perpetua
 from typing import Awaitable, Dict, List, Mapping
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.client.config.fee_overrides_config_map import init_fee_overrides_config
 from hummingbot.client.config.trade_fee_schema_loader import TradeFeeSchemaLoader
 from hummingbot.client.settings import AllConnectorSettings

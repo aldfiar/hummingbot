@@ -4,8 +4,8 @@ from decimal import Decimal
 from test.hummingbot.strategy.twap.twap_test_support import MockExchange
 from unittest import TestCase
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.core.clock import Clock, ClockMode
 from hummingbot.strategy.conditional_execution_state import RunInTimeConditionalExecutionState
 from hummingbot.strategy.market_trading_pair_tuple import MarketTradingPairTuple

@@ -27,17 +27,18 @@ class TokenBuySellPrice(BaseModel):
 
 class AmmGatewayDataFeed(NetworkBase):
     dex_logger: Optional[HummingbotLogger] = None
-    gateway_client = GatewayHttpClient.get_instance()
 
     def __init__(
-        self,
-        connector_chain_network: str,
-        trading_pairs: Set[str],
-        order_amount_in_base: Decimal,
-        update_interval: float = 1.0,
+            self,
+            client: GatewayHttpClient,
+            connector_chain_network: str,
+            trading_pairs: Set[str],
+            order_amount_in_base: Decimal,
+            update_interval: float = 1.0,
     ) -> None:
         super().__init__()
         self._ev_loop = asyncio.get_event_loop()
+        self.gateway_client = client
         self._price_dict: Dict[str, TokenBuySellPrice] = {}
         self._update_interval = update_interval
         self.fetch_data_loop_task: Optional[asyncio.Task] = None

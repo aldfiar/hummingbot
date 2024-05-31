@@ -9,7 +9,8 @@ from unittest.mock import patch
 import yaml
 from pydantic import validate_model
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, ConfigValidationError
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
+from hummingbot.client.config.validation_error import ConfigValidationError
 from hummingbot.client.settings import AllConnectorSettings
 from hummingbot.core.utils.trading_pair_fetcher import TradingPairFetcher
 from hummingbot.strategy.avellaneda_market_making.avellaneda_market_making_config_map_pydantic import (

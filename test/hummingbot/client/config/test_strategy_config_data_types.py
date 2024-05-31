@@ -5,12 +5,13 @@ from unittest import TestCase
 from unittest.mock import patch
 
 from hummingbot.client import settings
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_data_types import BaseClientModel
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, ConfigValidationError
 from hummingbot.client.config.strategy_config_data_types import (
     BaseTradingStrategyConfigMap,
     BaseTradingStrategyMakerTakerConfigMap,
 )
+from hummingbot.client.config.validation_error import ConfigValidationError
 from hummingbot.client.settings import AllConnectorSettings, ConnectorType
 
 

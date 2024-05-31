@@ -7,13 +7,10 @@ from weakref import ReferenceType, ref
 import path_util  # noqa: F401
 
 from hummingbot import chdir_to_data_directory, init_logging
+from hummingbot.client.config.client_config import load_client_config_map_from_file
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_crypt import ETHKeyFileSecretManger
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    create_yml_files_legacy,
-    load_client_config_map_from_file,
-    write_config_to_yml,
-)
+from hummingbot.client.config.config_helpers import create_yml_files_legacy, write_config_to_yml
 from hummingbot.client.hummingbot_application import HummingbotApplication
 from hummingbot.client.settings import AllConnectorSettings
 from hummingbot.client.ui import login_prompt

@@ -33,7 +33,7 @@ from hummingbot.core.utils.estimate_fee import build_trade_fee
 from hummingbot.core.web_assistant.auth import AuthBase
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 
 class GatewayCLOBPerp(PerpetualDerivativePyBase):

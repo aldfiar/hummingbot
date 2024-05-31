@@ -13,7 +13,7 @@ from hummingbot.connector.exchange_base import ExchangeBase
 from hummingbot.connector.exchange_base cimport ExchangeBase
 from hummingbot.core.clock cimport Clock
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.core.data_type.common import (
     OrderType,
     PriceType,

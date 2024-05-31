@@ -3,8 +3,8 @@ from decimal import Decimal
 from typing import Awaitable, Optional
 from unittest import TestCase
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.bitfinex.bitfinex_exchange import BitfinexExchange
 from hummingbot.core.data_type.common import OrderType, TradeType
 from hummingbot.core.data_type.trade_fee import TokenAmount

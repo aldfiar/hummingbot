@@ -1,10 +1,10 @@
 import logging
 from typing import Any, Awaitable, Callable, Dict, List, Optional
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.client.settings import AllConnectorSettings, ConnectorSetting
 from hummingbot.logger import HummingbotLogger
 
+from ...client.config.client_config_adapter import ClientConfigAdapter
 from .async_utils import safe_ensure_future
 
 

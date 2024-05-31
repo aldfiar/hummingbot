@@ -15,7 +15,7 @@ from hummingbot.model.metadata import Metadata as LocalMetadata
 from hummingbot.model.transaction_base import TransactionBase
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 
 class SQLConnectionType(Enum):

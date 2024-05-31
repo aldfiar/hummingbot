@@ -12,7 +12,7 @@ from decimal import Decimal
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple
 
 from hummingbot import get_logging_conf
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_var import ConfigVar
 from hummingbot.connector.connector_base import ConnectorBase
 from hummingbot.logger import HummingbotLogger

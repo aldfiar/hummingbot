@@ -8,8 +8,8 @@ from decimal import Decimal
 from typing import Dict, List
 from unittest.mock import patch
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.core.api_throttler.async_throttler import AsyncRequestContext, AsyncThrottler
 from hummingbot.core.api_throttler.data_types import LinkedLimitWeightPair, RateLimit, TaskLog
 from hummingbot.logger.struct_logger import METRICS_LOG_LEVEL

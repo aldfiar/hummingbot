@@ -15,8 +15,8 @@ from bidict import bidict
 import hummingbot.connector.derivative.bitmex_perpetual.bitmex_perpetual_utils as utils
 import hummingbot.connector.derivative.bitmex_perpetual.bitmex_perpetual_web_utils as web_utils
 import hummingbot.connector.derivative.bitmex_perpetual.constants as CONSTANTS
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.derivative.bitmex_perpetual.bitmex_perpetual_api_order_book_data_source import (
     BitmexPerpetualAPIOrderBookDataSource,
 )

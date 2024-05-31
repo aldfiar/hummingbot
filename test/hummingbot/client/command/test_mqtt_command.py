@@ -5,8 +5,8 @@ from unittest.mock import MagicMock, PropertyMock, patch
 
 from async_timeout import timeout
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.client.hummingbot_application import HummingbotApplication
 from hummingbot.core.mock_api.mock_mqtt_server import FakeMQTTBroker
 

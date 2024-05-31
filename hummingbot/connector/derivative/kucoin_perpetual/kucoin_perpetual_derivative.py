@@ -32,7 +32,7 @@ from hummingbot.core.web_assistant.connections.data_types import RESTMethod
 from hummingbot.core.web_assistant.web_assistants_factory import WebAssistantsFactory
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 s_decimal_NaN = Decimal("nan")
 s_decimal_0 = Decimal(0)

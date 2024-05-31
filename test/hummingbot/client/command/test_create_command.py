@@ -5,12 +5,9 @@ from test.mock.mock_cli import CLIMockingAssistant
 from typing import Awaitable
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    get_strategy_config_map,
-    read_system_configs_from_yml,
-)
+from hummingbot.client.config.config_helpers import get_strategy_config_map, read_system_configs_from_yml
 from hummingbot.client.hummingbot_application import HummingbotApplication
 
 

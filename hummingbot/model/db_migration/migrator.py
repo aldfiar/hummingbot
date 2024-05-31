@@ -6,7 +6,7 @@ from shutil import copyfile, move
 import pandas as pd
 from sqlalchemy.exc import SQLAlchemyError
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.model.db_migration.base_transformation import DatabaseTransformation
 from hummingbot.model.sql_connection_manager import SQLConnectionManager, SQLConnectionType
 

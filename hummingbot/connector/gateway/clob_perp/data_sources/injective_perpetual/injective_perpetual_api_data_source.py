@@ -42,7 +42,7 @@ from pyinjective.proto.exchange.injective_portfolio_rpc_pb2 import (
 )
 from pyinjective.proto.injective.exchange.v1beta1.exchange_pb2 import DerivativeOrder
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.connector.derivative.position import Position
 from hummingbot.connector.gateway.clob_perp.data_sources.clob_perp_api_data_source_base import CLOBPerpAPIDataSourceBase
 from hummingbot.connector.gateway.clob_perp.data_sources.injective_perpetual import (

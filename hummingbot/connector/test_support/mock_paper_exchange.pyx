@@ -18,8 +18,7 @@ from hummingbot.core.data_type.trade_fee import TradeFeeSchema
 from hummingbot.core.network_iterator import NetworkStatus
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
-
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 s_decimal_0 = Decimal("0")
 

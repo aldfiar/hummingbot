@@ -3,8 +3,8 @@ from unittest.mock import patch
 
 from prompt_toolkit.styles import Style
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.client.ui.style import hex_to_ansi, load_style, reset_style
 
 

@@ -1,9 +1,9 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
 from hummingbot.client.config.config_crypt import ETHKeyFileSecretManger
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.client.ui import login_prompt
 from hummingbot.client.ui.style import load_style
 

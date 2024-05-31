@@ -9,6 +9,7 @@ from typing import Any, Dict, List, Optional, Union, cast
 import yaml
 
 from hummingbot import root_path
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import (
     AnonymizedMetricsDisabledMode,
     AnonymizedMetricsEnabledMode,
@@ -25,8 +26,8 @@ from hummingbot.client.config.client_config_map import (
 )
 from hummingbot.client.config.config_crypt import BaseSecretsManager, store_password_verification
 from hummingbot.client.config.config_data_types import BaseConnectorConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, save_to_yml
 from hummingbot.client.config.security import Security
+from hummingbot.client.config.yaml_utility import save_to_yml
 from hummingbot.client.settings import CLIENT_CONFIG_PATH, CONF_DIR_PATH, STRATEGIES_CONF_DIR_PATH
 from hummingbot.strategy.avellaneda_market_making.avellaneda_market_making_config_map_pydantic import (
     AvellanedaMarketMakingConfigMap,

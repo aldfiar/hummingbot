@@ -34,7 +34,7 @@ class ArbProposalSide:
     def __repr__(self):
         side = "buy" if self.is_buy else "sell"
         return f"Connector: {self.market_info.market.display_name}  Side: {side}  Quote Price: {self.quote_price}  " \
-               f"Order Price: {self.order_price}  Amount: {self.amount}  Extra Fees: {self.extra_flat_fees}"
+               f"Order Price: {self.order_price}  Amount: {self.amount}  Extra Fees: {self.extra_flat_fees}. Completed: {self.completed_event}. Failed: {self.failed_event}"
 
     @property
     def is_completed(self) -> bool:
@@ -156,13 +156,14 @@ class ArbProposal:
         return f"First Side - {self.first_side}\nSecond Side - {self.second_side}"
 
     def copy(self):
+        self.logger().info(f"Copy sides to new proposal: {self.first_side}, {self.second_side}")
         return ArbProposal(
             ArbProposalSide(self.first_side.market_info, self.first_side.is_buy,
                             self.first_side.quote_price, self.first_side.order_price,
-                            self.first_side.amount, self.first_side.extra_flat_fees),
+                            self.first_side.amount, self.first_side.extra_flat_fees, asyncio.Event(), asyncio.Event()),
             ArbProposalSide(self.second_side.market_info, self.second_side.is_buy,
                             self.second_side.quote_price, self.second_side.order_price,
-                            self.second_side.amount, self.second_side.extra_flat_fees)
+                            self.second_side.amount, self.second_side.extra_flat_fees, asyncio.Event(), asyncio.Event())
         )
 
     async def wait(self):

@@ -11,8 +11,8 @@ from unittest.mock import patch
 from pydantic import SecretStr
 
 from hummingbot import root_path
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_data_types import BaseConnectorConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.client.settings import CONNECTOR_SUBMODULES_THAT_ARE_NOT_CEX_TYPES
 from hummingbot.connector.utils import get_new_client_order_id
 

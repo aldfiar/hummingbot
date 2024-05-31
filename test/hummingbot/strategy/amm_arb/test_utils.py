@@ -2,8 +2,8 @@ import asyncio
 import unittest
 from decimal import Decimal
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.connector_base import ConnectorBase
 from hummingbot.strategy.amm_arb import utils
 from hummingbot.strategy.market_trading_pair_tuple import MarketTradingPairTuple

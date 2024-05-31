@@ -22,7 +22,7 @@ from hummingbot.core.event.events import (
 from hummingbot.core.utils.async_utils import safe_ensure_future, safe_gather
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 
 class PerpetualDerivativePyBase(ExchangePyBase, ABC):

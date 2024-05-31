@@ -7,11 +7,8 @@ from typing import TYPE_CHECKING, Dict, List
 import pandas as pd
 
 from hummingbot import check_dev_mode
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    get_strategy_config_map,
-    missing_required_configs_legacy,
-)
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
+from hummingbot.client.config.config_helpers import get_strategy_config_map, missing_required_configs_legacy
 from hummingbot.client.config.security import Security
 from hummingbot.client.settings import ethereum_wallet_required, required_exchanges
 from hummingbot.connector.connector_base import ConnectorBase

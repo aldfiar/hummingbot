@@ -14,8 +14,8 @@ from hummingbot.core.data_type.trade_fee import TradeFeeSchema
 from hummingbot.core.utils.gateway_config_utils import SUPPORTED_CHAINS
 
 if TYPE_CHECKING:
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
     from hummingbot.client.config.config_data_types import BaseConnectorConfigMap
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
     from hummingbot.connector.connector_base import ConnectorBase
     from hummingbot.connector.gateway.clob_spot.data_sources.clob_api_data_source_base import CLOBAPIDataSourceBase
 

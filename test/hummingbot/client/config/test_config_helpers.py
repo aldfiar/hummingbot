@@ -9,19 +9,16 @@ from unittest.mock import MagicMock, patch
 from pydantic import Field, SecretStr
 
 from hummingbot.client.config import config_helpers
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter, ReadOnlyClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap, CommandShortcutModel
 from hummingbot.client.config.config_crypt import ETHKeyFileSecretManger
 from hummingbot.client.config.config_data_types import BaseClientModel, BaseConnectorConfigMap
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    ReadOnlyClientConfigAdapter,
-    get_connector_config_yml_path,
-    get_strategy_config_map,
-    load_connector_config_map_from_file,
-    save_to_yml,
-)
+from hummingbot.client.config.config_helpers import get_strategy_config_map
+from hummingbot.client.config.connector_config import load_connector_config_map_from_file
 from hummingbot.client.config.security import Security
 from hummingbot.client.config.strategy_config_data_types import BaseStrategyConfigMap
+from hummingbot.client.config.utility_methods import get_connector_config_yml_path
+from hummingbot.client.config.yaml_utility import save_to_yml
 from hummingbot.strategy.avellaneda_market_making.avellaneda_market_making_config_map_pydantic import (
     AvellanedaMarketMakingConfigMap,
 )

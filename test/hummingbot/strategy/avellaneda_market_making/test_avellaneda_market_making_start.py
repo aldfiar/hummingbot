@@ -4,8 +4,8 @@ import unittest.mock
 from decimal import Decimal
 
 import hummingbot.strategy.avellaneda_market_making.start as strategy_start
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange_base import ExchangeBase
 from hummingbot.connector.utils import combine_to_hb_trading_pair
 from hummingbot.strategy.avellaneda_market_making.avellaneda_market_making_config_map_pydantic import (

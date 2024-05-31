@@ -5,7 +5,7 @@ from hummingbot.connector.exchange_base import ExchangeBase
 from hummingbot.core.data_type.common import PositionMode
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 NaN = float("nan")
 s_decimal_NaN = Decimal("nan")

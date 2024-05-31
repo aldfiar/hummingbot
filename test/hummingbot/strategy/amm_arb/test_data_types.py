@@ -81,6 +81,31 @@ class ArbProposalTests(TestCase):
 
         self.assertEqual(proposal.profit_pct(), Decimal(2000) / buy_side.quote_price)
 
+    def test_copy_arb_sides(self):
+        buy_market_info = MarketTradingPairTuple(self.buy_market, "BTC-USDT", "BTC", "USDT")
+        sell_market_info = MarketTradingPairTuple(self.sell_market, "BTC-ETH", "BTC", "ETH")
+        buy_side = ArbProposalSide(
+            buy_market_info,
+            True,
+            Decimal(30000),
+            Decimal(30000),
+            Decimal(10),
+            []
+        )
+        sell_side = ArbProposalSide(
+            sell_market_info,
+            False,
+            Decimal(10),
+            Decimal(10),
+            Decimal(10),
+            []
+        )
+        proposal = ArbProposal(buy_side, sell_side)
+        buy_side.set_failed()
+        buy_side.set_completed()
+        new_proposal = proposal.copy()
+        self.assertEqual(False, new_proposal.first_side.is_failed)
+
     def test_profit_without_fees_for_different_quotes_trading_pairs(self):
         buy_market_info = MarketTradingPairTuple(self.buy_market, "BTC-USDT", "BTC", "USDT")
         sell_market_info = MarketTradingPairTuple(self.sell_market, "BTC-ETH", "BTC", "ETH")

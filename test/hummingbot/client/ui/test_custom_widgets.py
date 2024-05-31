@@ -4,8 +4,9 @@ from typing import Awaitable
 
 from prompt_toolkit.document import Document
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, read_system_configs_from_yml
+from hummingbot.client.config.config_helpers import read_system_configs_from_yml
 from hummingbot.client.ui.custom_widgets import FormattedTextLexer
 
 

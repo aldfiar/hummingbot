@@ -1,6 +1,7 @@
 from typing import List
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, get_connector_class
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
+from hummingbot.client.config.config_helpers import get_connector_class
 from hummingbot.client.settings import AllConnectorSettings
 from hummingbot.connector.exchange.paper_trade.paper_trade_exchange import PaperTradeExchange
 from hummingbot.core.data_type.order_book_tracker import OrderBookTracker

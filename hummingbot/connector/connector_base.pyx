@@ -20,8 +20,7 @@ from hummingbot.core.utils.estimate_fee import estimate_fee
 
 if TYPE_CHECKING:
     from hummingbot.client.config.client_config_map import ClientConfigMap
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
-
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 cdef class ConnectorBase(NetworkIterator):
     MARKET_EVENTS = [

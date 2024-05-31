@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import yaml
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_var import ConfigVar
 from hummingbot.client.settings import ConnectorSetting, ConnectorType
 from hummingbot.core.data_type.trade_fee import TradeFeeSchema

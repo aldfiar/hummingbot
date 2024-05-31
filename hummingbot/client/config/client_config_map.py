@@ -14,6 +14,7 @@ from tabulate import tabulate_formats
 from hummingbot.client.config.config_data_types import BaseClientModel, ClientConfigEnum, ClientFieldData
 from hummingbot.client.config.config_methods import using_exchange as using_exchange_pointer
 from hummingbot.client.config.config_validators import validate_bool, validate_float
+from hummingbot.client.config.rate_config import RATE_SOURCE_MODES, BinanceRateSourceMode, RateSourceModeBase
 from hummingbot.client.settings import (
     DEFAULT_GATEWAY_CERTS_PATH,
     DEFAULT_LOG_FILE_PATH,
@@ -31,8 +32,7 @@ from hummingbot.connector.exchange.binance.binance_utils import BinanceConfigMap
 from hummingbot.connector.exchange.gate_io.gate_io_utils import GateIOConfigMap
 from hummingbot.connector.exchange.kucoin.kucoin_utils import KuCoinConfigMap
 from hummingbot.connector.exchange_base import ExchangeBase
-from hummingbot.core.rate_oracle.rate_oracle import RATE_ORACLE_SOURCES, RateOracle
-from hummingbot.core.rate_oracle.sources.rate_source_base import RateSourceBase
+from hummingbot.core.rate_oracle.rate_oracle import RateOracle
 from hummingbot.core.utils.kill_switch import ActiveKillSwitch, KillSwitch, PassThroughKillSwitch
 from hummingbot.notifier.telegram_notifier import TelegramNotifier
 from hummingbot.pmm_script.pmm_script_iterator import PMMScriptIterator
@@ -733,109 +733,6 @@ METRICS_MODES = {
 }
 
 
-class RateSourceModeBase(BaseClientModel, ABC):
-    @abstractmethod
-    def build_rate_source(self) -> RateSourceBase:
-        ...
-
-
-class ExchangeRateSourceModeBase(RateSourceModeBase):
-    def build_rate_source(self) -> RateSourceBase:
-        return RATE_ORACLE_SOURCES[self.Config.title]()
-
-
-class AscendExRateSourceMode(ExchangeRateSourceModeBase):
-    name: str = Field(
-        default="ascend_ex",
-        const=True,
-        client_data=None,
-    )
-
-    class Config:
-        title = "ascend_ex"
-
-
-class BinanceRateSourceMode(ExchangeRateSourceModeBase):
-    name: str = Field(
-        default="binance",
-        const=True,
-        client_data=None,
-    )
-
-    class Config:
-        title = "binance"
-
-
-class CoinGeckoRateSourceMode(RateSourceModeBase):
-    name: str = Field(
-        default="coin_gecko",
-        const=True,
-        client_data=None,
-    )
-
-    extra_tokens: List[str] = Field(
-        default=[],
-        client_data=ClientFieldData(
-            prompt=lambda cm: (
-                "List of comma-delimited CoinGecko token ids to always include"
-                " in CoinGecko rates query (e.g. frontier-token,pax-gold,rbtc — empty to skip)"
-            ),
-            prompt_on_new=True,
-        )
-    )
-
-    class Config:
-        title = "coin_gecko"
-
-    def build_rate_source(self) -> RateSourceBase:
-        rate_source = RATE_ORACLE_SOURCES[self.Config.title](
-            extra_token_ids=self.extra_tokens
-        )
-        rate_source.extra_token_ids = self.extra_tokens
-        return rate_source
-
-    @validator("extra_tokens", pre=True)
-    def validate_extra_tokens(cls, value: Union[str, List[str]]):
-        extra_tokens = value.split(",") if isinstance(value, str) else value
-        return extra_tokens
-
-    @root_validator()
-    def post_validations(cls, values: Dict):
-        RateOracle.get_instance().source.extra_token_ids = values["extra_tokens"]
-        return values
-
-
-class KuCoinRateSourceMode(ExchangeRateSourceModeBase):
-    name: str = Field(
-        default="kucoin",
-        const=True,
-        client_data=None,
-    )
-
-    class Config:
-        title = "kucoin"
-
-
-class GateIoRateSourceMode(ExchangeRateSourceModeBase):
-    name: str = Field(
-        default="gate_io",
-        const=True,
-        client_data=None,
-    )
-
-    class Config:
-        title: str = "gate_io"
-
-
-RATE_SOURCE_MODES = {
-    AscendExRateSourceMode.Config.title: AscendExRateSourceMode,
-    BinanceRateSourceMode.Config.title: BinanceRateSourceMode,
-    CoinGeckoRateSourceMode.Config.title: CoinGeckoRateSourceMode,
-    KuCoinRateSourceMode.Config.title: KuCoinRateSourceMode,
-    GateIoRateSourceMode.Config.title: GateIoRateSourceMode,
-}
-
-
 class CommandShortcutModel(BaseModel):
     command: str
     help: str
@@ -947,10 +844,11 @@ class ClientConfigMap(BaseClientModel):
     certs_path: Path = Field(
         default=DEFAULT_GATEWAY_CERTS_PATH,
         client_data=ClientFieldData(
-            prompt=lambda cm: f"Where would you like to save certificates that connect your bot to Gateway? (default '{DEFAULT_GATEWAY_CERTS_PATH}')",
+            prompt=lambda cm: f"Where would you like to save certificates"
+                              f"\nthat connect your bot to Gateway?"
+                              f"\n(default '{DEFAULT_GATEWAY_CERTS_PATH}')",
         ),
     )
-
     anonymized_metrics_mode: Union[tuple(METRICS_MODES.values())] = Field(
         default=AnonymizedMetricsEnabledMode(),
         description="Whether to enable aggregated order and trade data collection",
@@ -1144,7 +1042,7 @@ class ClientConfigMap(BaseClientModel):
         return v
 
     # === post-validations ===
-
+    #
     @root_validator()
     def post_validations(cls, values: Dict):
         cls.rate_oracle_source_on_validated(values)

@@ -10,8 +10,8 @@ from aioresponses import aioresponses
 from bidict import bidict
 
 import hummingbot.connector.derivative.bitget_perpetual.bitget_perpetual_web_utils as web_utils
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.derivative.bitget_perpetual import bitget_perpetual_constants as CONSTANTS
 from hummingbot.connector.derivative.bitget_perpetual.bitget_perpetual_api_order_book_data_source import (
     BitgetPerpetualAPIOrderBookDataSource,

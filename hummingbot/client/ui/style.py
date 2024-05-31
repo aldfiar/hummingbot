@@ -3,8 +3,9 @@ from typing import Union
 from prompt_toolkit.styles import Style
 from prompt_toolkit.utils import is_windows
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, save_to_yml
+from hummingbot.client.config.yaml_utility import save_to_yml
 from hummingbot.client.settings import CLIENT_CONFIG_PATH
 
 

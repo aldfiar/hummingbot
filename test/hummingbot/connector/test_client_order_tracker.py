@@ -4,8 +4,8 @@ from decimal import Decimal
 from typing import Awaitable, Dict
 from unittest.mock import patch
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.client_order_tracker import ClientOrderTracker
 from hummingbot.connector.exchange_base import ExchangeBase
 from hummingbot.core.data_type.common import OrderType, TradeType

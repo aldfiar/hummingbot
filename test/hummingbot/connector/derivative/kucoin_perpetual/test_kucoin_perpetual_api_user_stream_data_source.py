@@ -7,8 +7,8 @@ from unittest.mock import AsyncMock, patch
 import ujson
 from aioresponses.core import aioresponses
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.derivative.kucoin_perpetual import (
     kucoin_perpetual_constants as CONSTANTS,
     kucoin_perpetual_web_utils as web_utils,

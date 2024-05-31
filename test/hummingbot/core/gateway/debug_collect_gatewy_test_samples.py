@@ -13,11 +13,9 @@ from os.path import join, realpath
 from test.mock.http_recorder import HttpRecorder
 
 from bin import path_util  # noqa: F401
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    load_client_config_map_from_file,
-    read_system_configs_from_yml,
-)
+from hummingbot.client.config.client_config import load_client_config_map_from_file
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
+from hummingbot.client.config.config_helpers import read_system_configs_from_yml
 from hummingbot.core.event.events import TradeType
 from hummingbot.core.gateway.gateway_http_client import GatewayHttpClient
 

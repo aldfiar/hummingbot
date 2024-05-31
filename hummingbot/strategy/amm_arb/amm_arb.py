@@ -337,7 +337,9 @@ class AmmArbStrategy(StrategyPyBase):
                 })
 
                 if not self._concurrent_orders_submission:
+                    self.logger().info(f"Waiting for order completion. Failed: {arb_side.is_failed}, completed: {arb_side.is_completed}")
                     await arb_side.completed_event.wait()
+                    self.logger().info(f"Waiting for order completion. Failed: {arb_side.is_failed}, completed: {arb_side.is_completed}")
                     if arb_side.is_failed:
                         self.log_with_clock(logging.ERROR,
                                             f"Order {order_id} seems to have failed in this arbitrage opportunity. "
@@ -477,11 +479,13 @@ class AmmArbStrategy(StrategyPyBase):
         return "\n".join(lines)
 
     def set_order_completed(self, order_id: str):
+        self.logger().info(f"Order id: {order_id} changed to completed")
         arb_side: Optional[ArbProposalSide] = self._order_id_side_map.get(order_id)
         if arb_side:
             arb_side.set_completed()
 
     def set_order_failed(self, order_id: str):
+        self.logger().info(f"Order id: {order_id} changed to failed state")
         arb_side: Optional[ArbProposalSide] = self._order_id_side_map.get(order_id)
         if arb_side:
             arb_side.set_failed()

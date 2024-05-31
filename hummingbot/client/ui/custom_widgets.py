@@ -19,7 +19,7 @@ from prompt_toolkit.lexers import DynamicLexer
 from prompt_toolkit.lexers.base import Lexer
 from prompt_toolkit.widgets.toolbars import SearchToolbar
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.ui.style import load_style, text_ui_style
 
 

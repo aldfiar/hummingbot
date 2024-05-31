@@ -7,8 +7,8 @@ from unittest.mock import AsyncMock, patch
 from bidict import bidict
 
 import hummingbot.connector.derivative.bitget_perpetual.bitget_perpetual_constants as CONSTANTS
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.derivative.bitget_perpetual.bitget_perpetual_auth import BitgetPerpetualAuth
 from hummingbot.connector.derivative.bitget_perpetual.bitget_perpetual_derivative import BitgetPerpetualDerivative
 from hummingbot.connector.derivative.bitget_perpetual.bitget_perpetual_user_stream_data_source import (

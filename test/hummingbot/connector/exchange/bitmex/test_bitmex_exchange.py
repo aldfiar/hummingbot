@@ -15,8 +15,8 @@ from bidict import bidict
 import hummingbot.connector.exchange.bitmex.bitmex_utils as utils
 import hummingbot.connector.exchange.bitmex.bitmex_web_utils as web_utils
 import hummingbot.connector.exchange.bitmex.constants as CONSTANTS
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.bitmex.bitmex_api_order_book_data_source import BitmexAPIOrderBookDataSource
 from hummingbot.connector.exchange.bitmex.bitmex_exchange import BitmexExchange
 from hummingbot.connector.exchange.bitmex.bitmex_order_status import BitmexOrderStatus

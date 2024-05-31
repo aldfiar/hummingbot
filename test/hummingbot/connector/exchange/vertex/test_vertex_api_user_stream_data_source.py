@@ -4,8 +4,8 @@ import unittest
 from typing import Awaitable, Dict, Optional
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.vertex import vertex_constants as CONSTANTS, vertex_web_utils as web_utils
 from hummingbot.connector.exchange.vertex.vertex_api_user_stream_data_source import VertexAPIUserStreamDataSource
 from hummingbot.connector.exchange.vertex.vertex_auth import VertexAuth

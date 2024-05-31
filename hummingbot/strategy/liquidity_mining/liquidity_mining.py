@@ -22,8 +22,8 @@ from hummingbot.strategy.pure_market_making.inventory_skew_calculator import (
 from hummingbot.strategy.strategy_py_base import StrategyPyBase
 from hummingbot.strategy.utils import order_age
 
+from ...client.config.client_config_adapter import ClientConfigAdapter
 from ...client.config.client_config_map import ClientConfigMap
-from ...client.config.config_helpers import ClientConfigAdapter
 from .data_types import PriceSize, Proposal
 
 NaN = float("nan")

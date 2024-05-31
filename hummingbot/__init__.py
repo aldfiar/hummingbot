@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, List, Optional
 from hummingbot.logger.struct_logger import StructLogger, StructLogRecord
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter as _ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter as _ClientConfigAdapter
 
 STRUCT_LOGGER_SET = False
 DEV_STRATEGY_PREFIX = "dev"

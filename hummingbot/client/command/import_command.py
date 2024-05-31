@@ -5,11 +5,11 @@ from typing import TYPE_CHECKING
 from hummingbot.client.config.client_config_map import AutofillImportEnum
 from hummingbot.client.config.config_helpers import (
     format_config_file_name,
-    load_strategy_config_map_from_file,
     save_previous_strategy_value,
     short_strategy_name,
     validate_strategy_file,
 )
+from hummingbot.client.config.strategy_config import load_strategy_config_map_from_file
 from hummingbot.client.settings import CONF_PREFIX, STRATEGIES_CONF_DIR_PATH, required_exchanges
 from hummingbot.core.utils.async_utils import safe_ensure_future
 

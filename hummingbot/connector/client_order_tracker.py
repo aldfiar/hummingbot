@@ -30,7 +30,6 @@ cot_logger = None
 
 
 class ClientOrderTracker:
-
     MAX_CACHE_SIZE = 1000
     CACHED_ORDER_TTL = 30.0  # seconds
     TRADE_FILLS_WAIT_TIMEOUT = 5  # seconds
@@ -170,7 +169,7 @@ class ClientOrderTracker:
         return self._cached_orders.get(client_order_id, None)
 
     def fetch_order(
-        self, client_order_id: Optional[str] = None, exchange_order_id: Optional[str] = None
+            self, client_order_id: Optional[str] = None, exchange_order_id: Optional[str] = None
     ) -> Optional[InFlightOrder]:
         found_order = None
 
@@ -184,7 +183,7 @@ class ClientOrderTracker:
         return found_order
 
     def fetch_lost_order(
-        self, client_order_id: Optional[str] = None, exchange_order_id: Optional[str] = None
+            self, client_order_id: Optional[str] = None, exchange_order_id: Optional[str] = None
     ) -> Optional[InFlightOrder]:
         found_order = None
 
@@ -202,7 +201,7 @@ class ClientOrderTracker:
 
     def process_trade_update(self, trade_update: TradeUpdate):
         client_order_id: str = trade_update.client_order_id
-
+        self.logger().info(f"Trade update for order: {client_order_id} with pair: {trade_update.trading_pair}")
         tracked_order: Optional[InFlightOrder] = self.all_fillable_orders.get(client_order_id)
 
         if tracked_order:
@@ -267,6 +266,8 @@ class ClientOrderTracker:
                 self.logger().debug(f"Order is not/no longer being tracked ({client_order_id})")
 
     async def _process_order_update(self, order_update: OrderUpdate):
+        self.logger().info(f"Order update: ${order_update}")
+
         if not order_update.client_order_id and not order_update.exchange_order_id:
             self.logger().error("OrderUpdate does not contain any client_order_id or exchange_order_id", exc_info=True)
             return
@@ -290,6 +291,10 @@ class ClientOrderTracker:
             previous_state: OrderState = tracked_order.current_state
 
             updated: bool = tracked_order.update_with_order_update(order_update)
+
+            self.logger().info(
+                f"Order state: {order_update.client_order_id} changed from {previous_state} to {order_update.new_state}")
+
             if updated:
                 self._trigger_order_creation(tracked_order, previous_state, order_update.new_state)
                 self._trigger_order_completion(tracked_order, order_update)
@@ -324,6 +329,7 @@ class ClientOrderTracker:
         )
 
     def _trigger_cancelled_event(self, order: InFlightOrder):
+        self.logger().info(f"Cancel order event: {order.to_json()}")
         self._connector.trigger_event(
             MarketEvent.OrderCancelled,
             OrderCancelledEvent(
@@ -334,13 +340,13 @@ class ClientOrderTracker:
         )
 
     def _trigger_filled_event(
-        self,
-        order: InFlightOrder,
-        fill_amount: Decimal,
-        fill_price: Decimal,
-        fill_fee: TradeFeeBase,
-        trade_id: str,
-        exchange_order_id: str,
+            self,
+            order: InFlightOrder,
+            fill_amount: Decimal,
+            fill_price: Decimal,
+            fill_fee: TradeFeeBase,
+            trade_id: str,
+            exchange_order_id: str,
     ):
         self._connector.trigger_event(
             MarketEvent.OrderFilled,
@@ -380,6 +386,7 @@ class ClientOrderTracker:
         )
 
     def _trigger_failure_event(self, order: InFlightOrder):
+        self.logger().info(f"Failed order event: {order.to_json()}")
         self._connector.trigger_event(
             MarketEvent.OrderFailure,
             MarketOrderFailureEvent(
@@ -390,6 +397,7 @@ class ClientOrderTracker:
         )
 
     def _trigger_order_creation(self, tracked_order: InFlightOrder, previous_state: OrderState, new_state: OrderState):
+        self.logger().info(f"Order created: {tracked_order.to_json()} with state: {new_state}")
         if previous_state == OrderState.PENDING_CREATE and new_state == OrderState.OPEN:
             self.logger().info(tracked_order.build_order_created_message())
             self._trigger_created_event(tracked_order)
@@ -418,6 +426,7 @@ class ClientOrderTracker:
             )
 
     def _trigger_order_completion(self, tracked_order: InFlightOrder, order_update: Optional[OrderUpdate] = None):
+        self.logger().info(f"Check order: {tracked_order} completed with update: {order_update}")
         if tracked_order.is_open:
             return
 

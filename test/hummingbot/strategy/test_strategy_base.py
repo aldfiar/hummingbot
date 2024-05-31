@@ -7,8 +7,8 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Tuple, Union
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.client.hummingbot_application import HummingbotApplication
 from hummingbot.connector.exchange.paper_trade.paper_trade_exchange import QuantizationParams
 from hummingbot.connector.in_flight_order_base import InFlightOrderBase

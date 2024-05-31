@@ -3,8 +3,9 @@ from decimal import Decimal
 from functools import lru_cache
 from typing import Dict, List, Optional, Set
 
+from hummingbot.client.config.client_config_adapter import ReadOnlyClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ReadOnlyClientConfigAdapter, get_connector_class
+from hummingbot.client.config.config_helpers import get_connector_class
 from hummingbot.client.config.security import Security
 from hummingbot.client.settings import AllConnectorSettings, GatewayConnectionSetting, gateway_connector_trading_pairs
 from hummingbot.core.utils.async_utils import safe_gather

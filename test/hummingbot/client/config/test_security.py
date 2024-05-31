@@ -5,14 +5,11 @@ from tempfile import TemporaryDirectory
 from typing import Awaitable
 
 from hummingbot.client.config import config_crypt, config_helpers, security
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_crypt import ETHKeyFileSecretManger, store_password_verification, validate_password
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    api_keys_from_connector_config_map,
-    get_connector_config_yml_path,
-    save_to_yml,
-)
 from hummingbot.client.config.security import Security
+from hummingbot.client.config.utility_methods import get_connector_config_yml_path
+from hummingbot.client.config.yaml_utility import api_keys_from_connector_config_map, save_to_yml
 from hummingbot.connector.exchange.binance.binance_utils import BinanceConfigMap
 from hummingbot.core.utils.async_call_scheduler import AsyncCallScheduler
 

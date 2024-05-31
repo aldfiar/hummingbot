@@ -8,8 +8,9 @@ from test.mock.mock_cli import CLIMockingAssistant
 from typing import Awaitable, List
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap, DBSqliteMode
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, read_system_configs_from_yml
+from hummingbot.client.config.config_helpers import read_system_configs_from_yml
 from hummingbot.client.hummingbot_application import HummingbotApplication
 from hummingbot.connector.exchange.paper_trade import PaperTradeExchange
 from hummingbot.core.data_type.trade_fee import AddedToCostTradeFee

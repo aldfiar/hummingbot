@@ -1,3 +1,4 @@
+import asyncio
 from decimal import Decimal
 from enum import Enum
 from typing import List
@@ -51,6 +52,9 @@ async def create_arb_proposals(
             order_price=m_1_o_price,
             amount=order_amount,
             extra_flat_fees=market_1_extra_flat_fees,
+            completed_event=asyncio.Event(),
+            failed_event=asyncio.Event()
+
         )
         second_side = ArbProposalSide(
             market_info=market_info_2,
@@ -58,7 +62,9 @@ async def create_arb_proposals(
             quote_price=m_2_q_price,
             order_price=m_2_o_price,
             amount=order_amount,
-            extra_flat_fees=market_2_extra_flat_fees
+            extra_flat_fees=market_2_extra_flat_fees,
+            completed_event=asyncio.Event(),
+            failed_event=asyncio.Event()
         )
 
         results.append(ArbProposal(first_side, second_side))

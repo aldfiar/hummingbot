@@ -34,7 +34,7 @@ from pyinjective.proto.exchange.injective_spot_exchange_rpc_pb2 import (
 from pyinjective.proto.injective.exchange.v1beta1.exchange_pb2 import SpotOrder
 from pyinjective.wallet import Address
 
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.connector.gateway.clob_spot.data_sources.clob_api_data_source_base import CLOBAPIDataSourceBase
 from hummingbot.connector.gateway.clob_spot.data_sources.injective.injective_constants import (
     BACKEND_TO_CLIENT_ORDER_STATE_MAP,

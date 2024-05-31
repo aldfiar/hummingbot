@@ -7,8 +7,6 @@ import time
 from decimal import Decimal
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Union, cast
 
-from async_timeout import timeout
-
 from hummingbot.client.settings import GatewayConnectionSetting
 from hummingbot.connector.client_order_tracker import ClientOrderTracker
 from hummingbot.connector.connector_base import ConnectorBase
@@ -35,7 +33,7 @@ from hummingbot.core.utils.tracking_nonce import get_tracking_nonce
 from hummingbot.logger import HummingbotLogger
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 s_logger = None
 s_decimal_0 = Decimal("0")
@@ -357,13 +355,13 @@ class GatewayEVMAMM(ConnectorBase):
         return ret_val
 
     def parse_price_response(
-        self,
-        base: str,
-        quote: str,
-        amount: Decimal,
-        side: TradeType,
-        price_response: Dict[str, Any],
-        process_exception: bool = True
+            self,
+            base: str,
+            quote: str,
+            amount: Decimal,
+            side: TradeType,
+            price_response: Dict[str, Any],
+            process_exception: bool = True
     ) -> Optional[Decimal]:
         """
         Parses price response
@@ -379,7 +377,8 @@ class GatewayEVMAMM(ConnectorBase):
             if "info" in price_response.keys():
                 self.logger().info(f"Unable to get price. {price_response['info']}")
             else:
-                self.logger().info(f"Missing data from price result. Incomplete return result for ({price_response.keys()})")
+                self.logger().info(
+                    f"Missing data from price result. Incomplete return result for ({price_response.keys()})")
         else:
             gas_price_token: str = price_response["gasPriceToken"]
             gas_cost: Decimal = Decimal(price_response["gasCost"])
@@ -578,6 +577,7 @@ class GatewayEVMAMM(ConnectorBase):
                         "fee_asset": self._native_currency
                     }
                 )
+                self.logger().info(f"Created update event for order_id: {order_id} with hash: {transaction_hash}")
                 self._order_tracker.process_order_update(order_update)
             else:
                 raise ValueError
@@ -661,8 +661,9 @@ class GatewayEVMAMM(ConnectorBase):
                 continue
             if transaction_status["txStatus"] == 1:
                 if transaction_status["txReceipt"]["status"] == 1:
-                    self.logger().info(f"Token approval for {tracked_approval.client_order_id} on {self.connector_name} "
-                                       f"successful.")
+                    self.logger().info(
+                        f"Token approval for {tracked_approval.client_order_id} on {self.connector_name} "
+                        f"successful.")
                     tracked_approval.current_state = OrderState.APPROVED
                     self.trigger_event(
                         TokenApprovalEvent.ApprovalSuccessful,
@@ -903,7 +904,8 @@ class GatewayEVMAMM(ConnectorBase):
         Call the gateway API to get the current nonce for self.address
         """
         if not new_nonce:
-            resp_json: Dict[str, Any] = await self._get_gateway_instance().get_evm_nonce(self.chain, self.network, self.address)
+            resp_json: Dict[str, Any] = await self._get_gateway_instance().get_evm_nonce(self.chain, self.network,
+                                                                                         self.address)
             new_nonce: int = resp_json.get("nonce")
 
         self._nonce = new_nonce
@@ -932,7 +934,8 @@ class GatewayEVMAMM(ConnectorBase):
         """
         if self._native_currency is None:
             await self.get_chain_info()
-        connector_tokens = GatewayConnectionSetting.get_connector_spec_from_market_name(self._name).get("tokens", "").split(",")
+        connector_tokens = GatewayConnectionSetting.get_connector_spec_from_market_name(self._name).get("tokens",
+                                                                                                        "").split(",")
         last_tick = self._last_balance_poll_timestamp
         current_tick = self.current_timestamp
         if not on_interval or (current_tick - last_tick) > self.UPDATE_BALANCE_INTERVAL:
@@ -1024,52 +1027,9 @@ class GatewayEVMAMM(ConnectorBase):
 
     async def cancel_outdated_orders(self, cancel_age: int) -> List[CancellationResult]:
         """
-        Iterate through all known orders and cancel them if their age is greater than cancel_age.
+        We do not cancel transactions on Near network.
         """
-        incomplete_orders: List[GatewayInFlightOrder] = []
-
-        # Incomplete Approval Requests
-        incomplete_orders.extend([
-            o for o in self.approval_orders
-            if o.is_pending_approval
-        ])
-        # Incomplete Active Orders
-        incomplete_orders.extend([
-            o for o in self.amm_orders
-            if not o.is_done
-        ])
-
-        if len(incomplete_orders) < 1:
-            return []
-
-        timeout_seconds: float = 30.0
-        canceling_id_set: Set[str] = set([o.client_order_id for o in incomplete_orders])
-        sent_cancellations: List[CancellationResult] = []
-
-        try:
-            async with timeout(timeout_seconds):
-                for incomplete_order in incomplete_orders:
-                    try:
-                        canceling_order_id: Optional[str] = await self._execute_cancel(
-                            incomplete_order.client_order_id,
-                            cancel_age
-                        )
-                    except Exception:
-                        continue
-                    if canceling_order_id is not None:
-                        canceling_id_set.remove(canceling_order_id)
-                        sent_cancellations.append(CancellationResult(canceling_order_id, True))
-        except asyncio.CancelledError:
-            raise
-        except Exception:
-            self.logger().network(
-                "Unexpected error cancelling outdated orders.",
-                exc_info=True,
-                app_warning_msg=f"Failed to cancel orders on {self.chain}-{self.network}."
-            )
-
-        skipped_cancellations: List[CancellationResult] = [CancellationResult(oid, False) for oid in canceling_id_set]
-        return sent_cancellations + skipped_cancellations
+        return []
 
     def _get_gateway_instance(self) -> GatewayHttpClient:
         gateway_instance = GatewayHttpClient.get_instance(self._client_config)

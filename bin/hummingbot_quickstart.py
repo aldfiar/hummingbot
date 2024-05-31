@@ -14,16 +14,16 @@ import path_util  # noqa: F401
 
 from bin.hummingbot import UIStartListener, detect_available_port
 from hummingbot import init_logging
+from hummingbot.client.config.client_config import load_client_config_map_from_file
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_crypt import BaseSecretsManager, ETHKeyFileSecretManger
 from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
     all_configs_complete,
     create_yml_files_legacy,
-    load_client_config_map_from_file,
-    load_strategy_config_map_from_file,
     read_system_configs_from_yml,
 )
 from hummingbot.client.config.security import Security
+from hummingbot.client.config.strategy_config import load_strategy_config_map_from_file
 from hummingbot.client.hummingbot_application import HummingbotApplication
 from hummingbot.client.settings import STRATEGIES_CONF_DIR_PATH, AllConnectorSettings
 from hummingbot.client.ui import login_prompt

@@ -8,8 +8,8 @@ from aiohttp import WSMsgType
 from bidict import bidict
 
 import hummingbot.connector.exchange.bitmart.bitmart_constants as CONSTANTS
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.bitmart import bitmart_utils
 from hummingbot.connector.exchange.bitmart.bitmart_api_user_stream_data_source import BitmartAPIUserStreamDataSource
 from hummingbot.connector.exchange.bitmart.bitmart_auth import BitmartAuth

@@ -7,8 +7,8 @@ from test.hummingbot.connector.gateway.clob_perp.data_sources.injective_perpetua
 from typing import Awaitable
 from unittest.mock import MagicMock
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange_base import ExchangeBase
 from hummingbot.connector.gateway.clob_perp.data_sources.injective_perpetual.injective_perpetual_api_data_source import (
     InjectivePerpetualAPIDataSource,

@@ -2,8 +2,8 @@ import unittest.mock
 from decimal import Decimal
 
 import hummingbot.strategy.hedge.start as strategy_start
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange_base import ExchangeBase
 from hummingbot.strategy.hedge.hedge_config_map_pydantic import EmptyMarketConfigMap, HedgeConfigMap, MarketConfigMap
 from hummingbot.strategy.market_trading_pair_tuple import MarketTradingPairTuple

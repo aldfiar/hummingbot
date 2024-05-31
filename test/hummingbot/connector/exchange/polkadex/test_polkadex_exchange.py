@@ -11,8 +11,8 @@ from aioresponses.core import RequestCall
 from bidict import bidict
 from substrateinterface import SubstrateInterface
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.polkadex.polkadex_exchange import PolkadexExchange
 from hummingbot.connector.test_support.exchange_connector_test import AbstractExchangeConnectorTests
 from hummingbot.connector.trading_rule import TradingRule

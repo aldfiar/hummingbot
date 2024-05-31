@@ -1,18 +1,19 @@
 import asyncio
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 from hummingbot.client.config.config_crypt import PASSWORD_VERIFICATION_PATH, BaseSecretsManager, validate_password
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    api_keys_from_connector_config_map,
+from hummingbot.client.config.connector_config import load_connector_config_map_from_file
+from hummingbot.client.config.utility_methods import (
     connector_name_from_file,
     get_connector_config_yml_path,
-    list_connector_configs,
-    load_connector_config_map_from_file,
     reset_connector_hb_config,
-    save_to_yml,
     update_connector_hb_config,
+)
+from hummingbot.client.config.yaml_utility import (
+    api_keys_from_connector_config_map,
+    list_connector_configs,
+    save_to_yml,
 )
 from hummingbot.core.utils.async_call_scheduler import AsyncCallScheduler
 from hummingbot.core.utils.async_utils import safe_ensure_future
@@ -61,7 +62,7 @@ class Security:
         cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
 
     @classmethod
-    def update_secure_config(cls, connector_config: ClientConfigAdapter):
+    def update_secure_config(cls, connector_config: Any):
         connector_name = connector_config.connector
         file_path = get_connector_config_yml_path(connector_name)
         save_to_yml(file_path, connector_config)
@@ -80,11 +81,11 @@ class Security:
         return cls._decryption_done.is_set()
 
     @classmethod
-    def decrypted_value(cls, key: str) -> Optional[ClientConfigAdapter]:
+    def decrypted_value(cls, key: str) -> Optional[Any]:
         return cls._secure_configs.get(key, None)
 
     @classmethod
-    def all_decrypted_values(cls) -> Dict[str, ClientConfigAdapter]:
+    def all_decrypted_values(cls) -> Dict[str, Any]:
         return cls._secure_configs.copy()
 
     @classmethod

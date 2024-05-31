@@ -7,8 +7,8 @@ from typing import Any, Callable, List, Optional, Tuple
 from aioresponses import aioresponses
 from aioresponses.core import RequestCall
 
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.client_config_map import ClientConfigMap
-from hummingbot.client.config.config_helpers import ClientConfigAdapter
 from hummingbot.connector.exchange.btc_markets import (
     btc_markets_constants as CONSTANTS,
     btc_markets_web_utils as web_utils,

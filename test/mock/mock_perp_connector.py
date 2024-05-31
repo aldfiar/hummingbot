@@ -9,7 +9,7 @@ from hummingbot.core.data_type.trade_fee import AddedToCostTradeFee, TradeFeeSch
 from hummingbot.core.utils.estimate_fee import build_perpetual_trade_fee
 
 if TYPE_CHECKING:
-    from hummingbot.client.config.config_helpers import ClientConfigAdapter
+    from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 
 
 class MockPerpConnector(MockPaperExchange, PerpetualTrading):

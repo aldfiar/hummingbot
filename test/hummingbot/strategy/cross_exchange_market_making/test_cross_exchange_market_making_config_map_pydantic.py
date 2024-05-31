@@ -8,8 +8,9 @@ from unittest.mock import patch
 import yaml
 
 from hummingbot.client import settings
-from hummingbot.client.config.config_helpers import ClientConfigAdapter, ConfigValidationError
+from hummingbot.client.config.client_config_adapter import ClientConfigAdapter
 from hummingbot.client.config.config_var import ConfigVar
+from hummingbot.client.config.validation_error import ConfigValidationError
 from hummingbot.client.settings import AllConnectorSettings, ConnectorSetting, ConnectorType
 from hummingbot.core.data_type.trade_fee import TradeFeeSchema
 from hummingbot.strategy.cross_exchange_market_making.cross_exchange_market_making_config_map_pydantic import (
