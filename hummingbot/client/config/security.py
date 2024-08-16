@@ -4,17 +4,15 @@ from pathlib import Path
 from typing import Dict, Optional
 
 from hummingbot.client.config.config_crypt import PASSWORD_VERIFICATION_PATH, BaseSecretsManager, validate_password
-from hummingbot.client.config.config_helpers import (
-    ClientConfigAdapter,
-    api_keys_from_connector_config_map,
+from hummingbot.client.config.config_helpers import ClientConfigAdapter, save_to_yml
+from hummingbot.client.config.connector_config import load_connector_config_map_from_file
+from hummingbot.client.config.utility_methods import (
     connector_name_from_file,
     get_connector_config_yml_path,
-    list_connector_configs,
-    load_connector_config_map_from_file,
     reset_connector_hb_config,
-    save_to_yml,
     update_connector_hb_config,
 )
+from hummingbot.client.config.yaml_utility import api_keys_from_connector_config_map, list_connector_configs
 from hummingbot.core.utils.async_call_scheduler import AsyncCallScheduler
 from hummingbot.core.utils.async_utils import safe_ensure_future
 from hummingbot.logger import HummingbotLogger

@@ -14,12 +14,12 @@ import path_util  # noqa: F401
 
 from bin.hummingbot import UIStartListener, detect_available_port
 from hummingbot import init_logging
+from hummingbot.client.config.client_config import load_client_config_map_from_file
 from hummingbot.client.config.config_crypt import BaseSecretsManager, ETHKeyFileSecretManger
 from hummingbot.client.config.config_helpers import (
     ClientConfigAdapter,
     all_configs_complete,
     create_yml_files_legacy,
-    load_client_config_map_from_file,
     load_strategy_config_map_from_file,
     read_system_configs_from_yml,
 )
@@ -94,7 +94,7 @@ async def quick_start(args: argparse.Namespace, secrets_manager: BaseSecretsMana
     AllConnectorSettings.initialize_paper_trade_settings(client_config_map.paper_trade.paper_trade_exchanges)
 
     hb = HummingbotApplication.main_application(client_config_map=client_config_map)
-    # Todo: validate strategy and config_file_name before assinging
+    # Todo: validate strategy and config_file_name before assigning
 
     strategy_config = None
     is_script = False

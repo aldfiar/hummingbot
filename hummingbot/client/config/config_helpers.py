@@ -7,7 +7,7 @@ from collections import OrderedDict, defaultdict
 from dataclasses import dataclass
 from datetime import date, datetime, time
 from decimal import Decimal
-from os import listdir, scandir, unlink
+from os import listdir, unlink
 from os.path import isfile, join
 from pathlib import Path, PosixPath, PureWindowsPath
 from typing import Any, Callable, Dict, Generator, List, Optional, Tuple, Type, Union
@@ -25,6 +25,9 @@ from hummingbot.client.config.config_data_types import BaseClientModel, ClientCo
 from hummingbot.client.config.config_var import ConfigVar
 from hummingbot.client.config.fee_overrides_config_map import fee_overrides_config_map, init_fee_overrides_config
 from hummingbot.client.config.gateway_ssl_config_map import SSLConfigMap
+from hummingbot.client.config.utility_methods import strategy_name_from_file
+from hummingbot.client.config.validate import _load_yml_data_into_map
+from hummingbot.client.config.yaml_utility import save_to_yml
 from hummingbot.client.settings import (
     CLIENT_CONFIG_PATH,
     CONF_DIR_PATH,
@@ -601,10 +604,10 @@ def get_strategy_starter_file(strategy: str) -> Callable:
         logging.getLogger().error(e, exc_info=True)
 
 
-def strategy_name_from_file(file_path: Path) -> str:
-    data = read_yml_file(file_path)
-    strategy = data.get("strategy")
-    return strategy
+# def strategy_name_from_file(file_path: Path) -> str:
+#     data = read_yml_file(file_path)
+#     strategy = data.get("strategy")
+#     return strategy
 
 
 def connector_name_from_file(file_path: Path) -> str:
@@ -669,22 +672,22 @@ def load_connector_config_map_from_file(yml_path: Path) -> ClientConfigAdapter:
     return config_map
 
 
-def load_client_config_map_from_file() -> ClientConfigAdapter:
-    yml_path = CLIENT_CONFIG_PATH
-    if yml_path.exists():
-        config_data = read_yml_file(yml_path)
-    else:
-        config_data = {}
-    client_config = ClientConfigMap()
-    config_map = ClientConfigAdapter(client_config)
-    config_validation_errors = _load_yml_data_into_map(config_data, config_map)
-
-    if len(config_validation_errors) > 0:
-        all_errors = "\n".join(config_validation_errors)
-        raise ConfigValidationError(f"There are errors in the client global configuration (\n{all_errors})")
-    save_to_yml(yml_path, config_map)
-
-    return config_map
+# def load_client_config_map_from_file() -> ClientConfigAdapter:
+#     yml_path = CLIENT_CONFIG_PATH
+#     if yml_path.exists():
+#         config_data = read_yml_file(yml_path)
+#     else:
+#         config_data = {}
+#     client_config = ClientConfigMap()
+#     config_map = ClientConfigAdapter(client_config)
+#     config_validation_errors = _load_yml_data_into_map(config_data, config_map)
+#
+#     if len(config_validation_errors) > 0:
+#         all_errors = "\n".join(config_validation_errors)
+#         raise ConfigValidationError(f"There are errors in the client global configuration (\n{all_errors})")
+#     save_to_yml(yml_path, config_map)
+#
+#     return config_map
 
 
 def load_ssl_config_map_from_file() -> ClientConfigAdapter:
@@ -720,13 +723,13 @@ def update_connector_hb_config(connector_config: ClientConfigAdapter):
     AllConnectorSettings.update_connector_config_keys(connector_config.hb_config)
 
 
-def api_keys_from_connector_config_map(cm: ClientConfigAdapter) -> Dict[str, str]:
-    api_keys = {}
-    for c in cm.traverse():
-        if c.value is not None and c.client_field_data is not None and c.client_field_data.is_connect_key:
-            value = c.value.get_secret_value() if isinstance(c.value, SecretStr) else c.value
-            api_keys[c.attr] = value
-    return api_keys
+# def api_keys_from_connector_config_map(cm: ClientConfigAdapter) -> Dict[str, str]:
+#     api_keys = {}
+#     for c in cm.traverse():
+#         if c.value is not None and c.client_field_data is not None and c.client_field_data.is_connect_key:
+#             value = c.value.get_secret_value() if isinstance(c.value, SecretStr) else c.value
+#             api_keys[c.attr] = value
+#     return api_keys
 
 
 def get_connector_config_yml_path(connector_name: str) -> Path:
@@ -734,42 +737,42 @@ def get_connector_config_yml_path(connector_name: str) -> Path:
     return connector_path
 
 
-def list_connector_configs() -> List[Path]:
-    connector_configs = [
-        Path(f.path) for f in scandir(str(CONNECTORS_CONF_DIR_PATH))
-        if f.is_file() and not f.name.startswith("_") and not f.name.startswith(".")
-    ]
-    return connector_configs
+# def list_connector_configs() -> List[Path]:
+#     connector_configs = [
+#         Path(f.path) for f in scandir(str(CONNECTORS_CONF_DIR_PATH))
+#         if f.is_file() and not f.name.startswith("_") and not f.name.startswith(".")
+#     ]
+#     return connector_configs
 
 
-def _load_yml_data_into_map(yml_data: Dict[str, Any], cm: ClientConfigAdapter) -> List[str]:
-    for key in cm.keys():
-        if key in yml_data:
-            cm.setattr_no_validation(key, yml_data[key])
-
-    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
-    return config_validation_errors
-
-
-async def load_yml_into_dict(yml_path: str) -> Dict[str, Any]:
-    data = {}
-    if isfile(yml_path):
-        with open(yml_path, encoding="utf-8") as stream:
-            data = yaml_parser.load(stream) or {}
-
-    return dict(data.items())
+# def _load_yml_data_into_map(yml_data: Dict[str, Any], cm: ClientConfigAdapter) -> List[str]:
+#     for key in cm.keys():
+#         if key in yml_data:
+#             cm.setattr_no_validation(key, yml_data[key])
+#
+#     config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+#     return config_validation_errors
 
 
-async def save_yml_from_dict(yml_path: str, conf_dict: Dict[str, Any]):
-    try:
-        with open(yml_path, "w+", encoding="utf-8") as stream:
-            data = yaml_parser.load(stream) or {}
-            for key in conf_dict:
-                data[key] = conf_dict.get(key)
-            with open(yml_path, "w+", encoding="utf-8") as outfile:
-                yaml_parser.dump(data, outfile)
-    except Exception as e:
-        logging.getLogger().error(f"Error writing configs: {str(e)}", exc_info=True)
+# async def load_yml_into_dict(yml_path: str) -> Dict[str, Any]:
+#     data = {}
+#     if isfile(yml_path):
+#         with open(yml_path, encoding="utf-8") as stream:
+#             data = yaml_parser.load(stream) or {}
+#
+#     return dict(data.items())
+
+
+# async def save_yml_from_dict(yml_path: str, conf_dict: Dict[str, Any]):
+#     try:
+#         with open(yml_path, "w+", encoding="utf-8") as stream:
+#             data = yaml_parser.load(stream) or {}
+#             for key in conf_dict:
+#                 data[key] = conf_dict.get(key)
+#             with open(yml_path, "w+", encoding="utf-8") as outfile:
+#                 yaml_parser.dump(data, outfile)
+#     except Exception as e:
+#         logging.getLogger().error(f"Error writing configs: {str(e)}", exc_info=True)
 
 
 async def load_yml_into_cm_legacy(yml_path: str, template_file_path: str, cm: Dict[str, ConfigVar]):
@@ -870,13 +873,13 @@ def save_to_yml_legacy(yml_path: str, cm: Dict[str, ConfigVar]):
         logging.getLogger().error("Error writing configs: %s" % (str(e),), exc_info=True)
 
 
-def save_to_yml(yml_path: Path, cm: ClientConfigAdapter):
-    try:
-        cm_yml_str = cm.generate_yml_output_str_with_comments()
-        with open(yml_path, "w", encoding="utf-8") as outfile:
-            outfile.write(cm_yml_str)
-    except Exception as e:
-        logging.getLogger().error("Error writing configs: %s" % (str(e),), exc_info=True)
+# def save_to_yml(yml_path: Path, cm: ClientConfigAdapter):
+#     try:
+#         cm_yml_str = cm.generate_yml_output_str_with_comments()
+#         with open(yml_path, "w", encoding="utf-8") as outfile:
+#             outfile.write(cm_yml_str)
+#     except Exception as e:
+#         logging.getLogger().error("Error writing configs: %s" % (str(e),), exc_info=True)
 
 
 def write_config_to_yml(

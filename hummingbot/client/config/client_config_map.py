@@ -765,6 +765,35 @@ class BinanceRateSourceMode(ExchangeRateSourceModeBase):
         title = "binance"
 
 
+class UniswapRateSourceMode(ExchangeRateSourceModeBase):
+    name: str = Field(
+        default="uniswap",
+        const=True,
+        client_data=None,
+    )
+
+    extra_tokens: List[str] = Field(
+        default=[],
+        client_data=ClientFieldData(
+            prompt=lambda cm: (
+                "List of comma-delimited CoinGecko token ids to always include"
+                " in CoinGecko rates query (e.g. frontier-token,pax-gold,rbtc — empty to skip)"
+            ),
+            prompt_on_new=True,
+        )
+    )
+
+    class Config:
+        title = "uniswap"
+
+    def build_rate_source(self) -> RateSourceBase:
+        rate_source = RATE_ORACLE_SOURCES[self.Config.title](
+            extra_token_ids=self.extra_tokens
+        )
+        rate_source.extra_token_ids = self.extra_tokens
+        return rate_source
+
+
 class BinanceUSRateSourceMode(ExchangeRateSourceModeBase):
     name: str = Field(
         default="binance_us",
@@ -950,6 +979,7 @@ RATE_SOURCE_MODES = {
     GateIoRateSourceMode.Config.title: GateIoRateSourceMode,
     CoinbaseAdvancedTradeRateSourceMode.Config.title: CoinbaseAdvancedTradeRateSourceMode,
     CubeRateSourceMode.Config.title: CubeRateSourceMode,
+    UniswapRateSourceMode.Config.title: UniswapRateSourceMode,
 }
 
 

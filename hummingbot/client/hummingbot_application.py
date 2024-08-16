@@ -7,13 +7,13 @@ from collections import deque
 from typing import Deque, Dict, List, Optional, Tuple, Union
 
 from hummingbot.client.command import __all__ as commands
+from hummingbot.client.config.client_config import load_client_config_map_from_file
 from hummingbot.client.config.client_config_map import ClientConfigMap
 from hummingbot.client.config.config_helpers import (
     ClientConfigAdapter,
     ReadOnlyClientConfigAdapter,
     get_connector_class,
     get_strategy_config_map,
-    load_client_config_map_from_file,
     load_ssl_config_map_from_file,
     save_to_yml,
 )
